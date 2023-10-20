@@ -5,7 +5,8 @@ spring:
   datasource:
     druid:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      url: jdbc://mysql://localhost:3306/ssm_db?serverTimezone=UTC
+      url: jdbc:mysql://127.0.0.1:3306/ssm_db?useUnicode=true&
+        characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true&useSSL=false
       username: root
       password: '0205006'
 
@@ -13,3 +14,4 @@ mybatis-plus:
   global-config:
     db-config:
       table-prefix: tbl_
+      id-type: auto
