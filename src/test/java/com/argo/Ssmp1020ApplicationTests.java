@@ -53,7 +53,8 @@ class Ssmp1020ApplicationTests {
 //            System.out.println(bookItem);
 //        }
         LambdaQueryWrapper<Book> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        lambdaQueryWrapper.like(Book::getName, "Spring");
+        String name = "Spring";
+        lambdaQueryWrapper.like(name != null, Book::getName, name);
         List<Book> bookList = bookMapper.selectList(lambdaQueryWrapper);
         bookList.forEach(System.out::println);
     }
