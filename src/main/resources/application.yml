@@ -15,3 +15,5 @@ mybatis-plus:
     db-config:
       table-prefix: tbl_
       id-type: auto
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
