@@ -2,28 +2,29 @@ package com.argo.service.impl;
 
 import com.argo.dao.BookMapper;
 import com.argo.domain.Book;
-import com.argo.service.IBookService;
+import com.argo.service.BookService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 /**
  * @author YangY
  */
 @Service
-public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements IBookService {
+public class BookServiceImpl2 implements BookService {
+
+    @Autowired
+    private BookMapper bookMapper;
     /**
      * @param book
      * @return
      */
-
-    @Autowired
-    private BookMapper bookMapper;
     @Override
-    public boolean saveBook(Book book) {
+    public boolean save(Book book) {
         return bookMapper.insert(book) > 0;
     }
 
@@ -32,7 +33,7 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements IB
      * @return
      */
     @Override
-    public boolean modify(Book book) {
+    public boolean update(Book book) {
         return bookMapper.updateById(book) > 0;
     }
 
@@ -46,20 +47,29 @@ public class BookServiceImpl extends ServiceImpl<BookMapper, Book> implements IB
     }
 
     /**
+     * @return
+     */
+    @Override
+    public Book getById(Integer id) {
+        return bookMapper.selectById(id);
+    }
+
+    /**
+     * @return
+     */
+    @Override
+    public List<Book> getAll() {
+        return bookMapper.selectList(null);
+    }
+
+    /**
      * @param curPage
      * @param pageSize
      * @return
      */
     @Override
     public IPage<Book> getPage(int curPage, int pageSize) {
-        return bookMapper.selectPage(new Page(curPage, pageSize), null);
-    }
-
-    /**
-     * @param book
-     * @return
-     */
-    public boolean delete(Book book) {
-        return bookMapper.deleteById(book) > 0;
+        IPage<Book> bookIPage = new Page<>(curPage, pageSize);
+        return bookMapper.selectPage(bookIPage, null);
     }
 }
