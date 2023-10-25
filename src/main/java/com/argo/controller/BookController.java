@@ -42,7 +42,8 @@ public class BookController {
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id){
-        return new Result(iBookService.delete(id));
+        Result deleteResult = new Result(iBookService.delete(id));
+        return deleteResult;
     }
 
     @GetMapping("/{id}")
