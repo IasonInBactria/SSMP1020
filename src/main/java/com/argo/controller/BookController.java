@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -29,10 +30,14 @@ public class BookController {
     }
 
     @PostMapping()
-    public Result save(@RequestBody Book book){
+    public Result save(@RequestBody Book book) throws IOException {
 //        Result result = new Result();
 //        result.setFlag(iBookService.saveBook(book));
-        return new Result(iBookService.saveBook(book));
+        if (book.getName().equals("123")) {
+            throw new IOException();
+        }
+        boolean flag = iBookService.saveBook(book);
+        return new Result(flag, flag? "修改成功^_^": "修改失败-_-!");
     }
 
     @PutMapping
