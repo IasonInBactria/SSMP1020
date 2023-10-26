@@ -58,6 +58,11 @@ public class BookController {
 
     @GetMapping("{curPage}/{pageSize}")
     public Result getPage(@PathVariable int curPage, @PathVariable int pageSize){
-        return new Result(true, iBookService.getPage(curPage, pageSize));
+        IPage<Book> iPage = iBookService.getPage(curPage, pageSize);
+        //如果当前页码值大于总页码值，那么重新执行查询操作，使用最大页码值作为当前页码值
+        if (curPage > iPage.getPages()){
+            iPage = iBookService.getPage((int)iPage.getPages(), pageSize);
+        }
+        return new Result(true, iPage);
     }
 }
