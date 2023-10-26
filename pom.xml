@@ -73,8 +73,8 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
                 <configuration>
-                    <mainClass>com.argo.Ssmp1020Application</mainClass>
-                    <skip>true</skip>
+                    <fork>true</fork> <!-- 如果没有该配置，devtools不会生效 -->
+                    <includeSystemScope>true</includeSystemScope> <!-- 打包时包括本地第三方引用的jar包-->
                 </configuration>
                 <executions>
                     <execution>
