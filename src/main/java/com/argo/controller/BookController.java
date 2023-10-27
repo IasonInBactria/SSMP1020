@@ -6,6 +6,8 @@ import com.argo.dao.BookMapper;
 import com.argo.domain.Book;
 import com.argo.service.IBookService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,10 +24,15 @@ public class BookController {
 
     @Autowired
     private IBookService iBookService;
+    /**
+     * 创建记录日志的对象
+     */
+    private static final Logger logger = LoggerFactory.getLogger(BookController.class);
 
     @GetMapping()
     public Result getAll(){
         Result result = new Result();
+
         return new Result(true, iBookService.list());
     }
 
@@ -63,6 +70,7 @@ public class BookController {
         if (curPage > iPage.getPages()){
             iPage = iBookService.getPage((int)iPage.getPages(), pageSize, book);
         }
+        logger.info("get all info!!!");
         return new Result(true, iPage);
     }
 }
