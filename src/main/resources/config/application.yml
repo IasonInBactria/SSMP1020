@@ -17,3 +17,12 @@ mybatis-plus:
       id-type: auto
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+logging:
+  level:
+    root: info
+  file:
+    logback:
+      rollingpolicy:
+        max-file_size: 4KB
+        file-name-patten: server.%d{yyyy-MM-dd}.%i.log

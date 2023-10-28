@@ -6,8 +6,8 @@ import com.argo.dao.BookMapper;
 import com.argo.domain.Book;
 import com.argo.service.IBookService;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +18,10 @@ import java.util.List;
 /**
  * @author YangY
  */
+@Slf4j
 @RestController
 @RequestMapping("/books")
+
 public class BookController {
 
     @Autowired
@@ -27,12 +29,9 @@ public class BookController {
     /**
      * 创建记录日志的对象
      */
-    private static final Logger logger = LoggerFactory.getLogger(BookController.class);
-
     @GetMapping()
     public Result getAll(){
         Result result = new Result();
-
         return new Result(true, iBookService.list());
     }
 
@@ -66,11 +65,11 @@ public class BookController {
     @GetMapping("{curPage}/{pageSize}")
     public Result getPage(@PathVariable int curPage, @PathVariable int pageSize, Book book){
         IPage<Book> iPage = iBookService.getPage(curPage, pageSize, book);
+        log.info("get hot deploy!!!!");
         //如果当前页码值大于总页码值，那么重新执行查询操作，使用最大页码值作为当前页码值
         if (curPage > iPage.getPages()){
             iPage = iBookService.getPage((int)iPage.getPages(), pageSize, book);
         }
-        logger.info("get all info!!!");
         return new Result(true, iPage);
     }
 }
